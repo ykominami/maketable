@@ -1,0 +1,24 @@
+require "bundler/setup"
+require "maketable"
+require 'yaml'
+
+# bundle exec ruby bin/a.rb C:\Users\ykomi\repo\github\ykominami\devconf_rel.wiki\task.md
+yamlfile = ARGV[0]
+obj = YAML.load_file(yamlfile)
+input_file = obj["input_file"]
+output_file = obj["output_file"]
+colums_count = obj["columns_count"]
+table_format = obj["table_format"]
+headers = obj["headers"]
+fields = obj["fields"]
+lmd = Maketable::LimitedMarkDown.new(input_file, output_file)
+table_format = obj["table_format"]
+#format = :markdown
+fields.map{ |hs|
+  hs["re"] = Regexp.new("^#{hs["name"]}:([^|]*)$")
+}
+
+str = lmd.md2table(colums_count, headers, table_format, fields)
+puts(str)
+lmd.output(str)
+
