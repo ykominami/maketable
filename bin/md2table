@@ -2,7 +2,9 @@ require "bundler/setup"
 require "maketable"
 require 'yaml'
 
+
 # bundle exec ruby bin/a.rb C:\Users\ykomi\repo\github\ykominami\devconf_rel.wiki\task.md
+=begin
 yamlfile = ARGV[0]
 obj = YAML.load_file(yamlfile)
 input_file = obj["input_file"]
@@ -11,14 +13,32 @@ colums_count = obj["columns_count"]
 table_format = obj["table_format"]
 headers = obj["headers"]
 fields = obj["fields"]
-lmd = Maketable::LimitedMarkDown.new(input_file, output_file)
 table_format = obj["table_format"]
 #format = :markdown
 fields.map{ |hs|
   hs["re"] = Regexp.new("^#{hs["name"]}:([^|]*)$")
 }
+lmd = Maketable::LimitedMarkDown.new(input_file, output_file)
+=end
+def test_file_base_pn
+  if ENV["TEST_DATA_DIR"]
+    Pathname.new(ENV["TEST_DATA_DIR"])
+  else
+    Maketable::TEST_DATA_DIR
+  end
+end
 
-str = lmd.md2table(colums_count, headers, table_format, fields)
-puts(str)
+def test_file_pn
+  @test_file_pn = test_file_base_pn + "test.yml"
+end
+
+def test_file_x_pn(fname)
+  @test_file_pn = test_file_base_pn + fname
+end
+
+yaml_file = test_file_x_pn("task_no_test_data.yaml")
+#p yaml_file
+lmd , hs = Maketable::LimitedMarkDown.create_from_yaml_file(yaml_file)
+str = lmd.md2table(hs["columns_count"], hs["headers"], hs["table_format"], hs["fields"])
 lmd.output(str)
 

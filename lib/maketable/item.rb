@@ -24,7 +24,9 @@ module Maketable
       if sep == ""
         head, sep, tail = left.partition("-")
         if sep == ""
-          datetime_head = DateTime.parse(%(#{@year_str}/#{left}))
+          date_str = %(#{@year_str}/#{left})
+          p "date_str=#{date_str}"
+          datetime_head = DateTime.parse(date_str)
           @date_head = datetime_head.to_date
         else
           datetime_head = DateTime.parse(%(#{@year_str}/#{head}))
