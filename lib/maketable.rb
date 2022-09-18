@@ -1,4 +1,23 @@
 # frozen_string_literal: true
+require "pathname"
+require "byebug"
+
+module Maketable
+  TEST_DATA_DIR = Pathname.new(__dir__).parent + "test_data"
+  EXIT_COD_OF_ERROR_OCURRENT = 1
+  EXIT_COD_OF_ILLEGAL_STATE = 2
+  EXIT_COD_OF_ILLEGAL_ACTION = 3
+
+  class Error < StandardError; end
+  class InvalidYearError < Error; end
+  class InvalidObjectError < Error; end
+  class InvalidFormatError < Error; end
+  class InvalidLevelChangeError < Error; end
+  class NoParentItemxError < Error; end
+  class InvalidParentLevelError < Error; end
+  class InvalidDataString < Error; end
+  # Your code goes here...
+end
 
 require_relative "maketable/version"
 require_relative "maketable/item"
@@ -12,18 +31,3 @@ require_relative "maketable/utilx"
 require_relative "maketable/hiretext"
 require_relative "maketable/cli"
 
-require "pathname"
-require "byebug"
-module Maketable
-  #  TEST_DATA_DIR = Pathname.new(__dir__).parent + "test_data"
-  TEST_DATA_DIR = Pathname.new(__dir__).parent.parent.join("maketable_test_data")
-
-  class Error < StandardError; end
-  class InvalidYearError < Error; end
-  class InvalidObjectError < Error; end
-  class InvalidFormatError < Error; end
-  class InvalidLevelChangeError < Error; end
-  class NoParentItemxError < Error; end
-  class InvalidParentLevelError < Error; end
-  # Your code goes here...
-end

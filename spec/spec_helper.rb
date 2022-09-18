@@ -24,8 +24,8 @@ def test_file_base_pn
   end
 end
 
-def test_file_pn
-  @test_file_pn = test_file_base_pn.join("test.yml")
+def test_file_calendar_pn
+  @test_file_pn = test_file_base_pn.join("calendar.yml")
 end
 
 def test_file_x_pn(fname)

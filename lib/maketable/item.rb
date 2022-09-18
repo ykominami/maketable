@@ -5,9 +5,10 @@ module Maketable
     attr_reader :desc_str, :date_tail
     attr_accessor :date_head
 
-    def initialize(desc_str, year_str)
+    def initialize(desc_str, year_str, index)
       @desc_str = desc_str
       @year_str = year_str
+      @index = index
       @date_head = nil
       @date_tail = nil
     end
@@ -18,6 +19,7 @@ module Maketable
     end
 
     def analyze
+      error_occrence_count = 0
       # byebug
       # puts "@desc_str=#{@desc_str}|"
       left, _sep, _right = @desc_str.partition(" ")
@@ -29,28 +31,71 @@ module Maketable
           begin
             datetime_head = DateTime.parse(date_str)
             @date_head = datetime_head.to_date
-          rescue StandardError => e
-            puts e.message
-            puts "date_str=#{date_str}"
+            raise InvalidDataString if @date_head.nil?
+          rescue StandardError => exc
+            puts exc.message
+            puts "A0 desc_str=#{desc_str}"
+            error_occrence_count += 1
           end
         else
-          datetime_head = DateTime.parse(%(#{@year_str}/#{head}))
-          @date_head = datetime_head.to_date
-          lh, _sep, _rh = head.partition("/")
-          datetime_tail = DateTime.parse(%(#{@year_str}/#{lh}/#{tail}))
-          @date_tail = datetime_tail.to_date
+          begin
+            date_str = %(#{@year_str}/#{head})
+            datetime_head = DateTime.parse(date_str)
+            @date_head = datetime_head.to_date
+            raise InvalidDataString if @date_head.nil?
+          rescue StandardError => exc
+            puts exc.message
+            puts "A1 desc_str=#{desc_str}"
+            puts "A1 date_str=#{date_str}"
+            error_occrence_count += 1
+          end
+
+          begin
+            lh, _sep, _rh = head.partition("/")
+            date_str = %(#{@year_str}/#{lh}/#{tail})
+            datetime_tail = DateTime.parse(date_str)
+            @date_tail = datetime_tail.to_date
+            raise InvalidDataString if @date_tail.nil?
+          rescue StandardError => exc
+            puts exc.message
+            puts "A2 desc_str=#{desc_str}"
+            puts "A2 date_str=#{date_str}"
+            error_occrence_count += 1
+          end
         end
       else
-        datetime_head = DateTime.parse(%(#{@year_str}/#{head}))
-        @date_head = datetime_head.to_date
+        begin
+          date_str = %(#{@year_str}/#{head})
+          datetime_head = DateTime.parse(date_str)
+          @date_head = datetime_head.to_date
+          raise InvalidDataString if @date_head.nil?
+        rescue StandardError => exc
+          puts exc.message
+          puts "A3 desc_str=#{desc_str}"
+          puts "A3 date_str=#{date_str}"
+          error_occrence_count += 1
+        end
         lh, _sep, _rh = head.partition("/")
-        datetime_tail = DateTime.parse(%(#{@year_str}/#{lh}/#{tail}))
-        @date_tail = datetime_tail.to_date
+        begin
+          date_str = %(#{@year_str}/#{lh}/#{tail})
+          datetime_tail = DateTime.parse(date_str)
+          @date_tail = datetime_tail.to_date
+          raise InvalidDataString if @date_head.nil?
+        rescue StandardError => exc
+          puts exc.message
+          puts "A4 desc_str=#{desc_str}"
+          puts "A4 date_str=#{date_str}"
+          error_occrence_count += 1
+        end
+      end
+
+      if error_occrence_count > 0
+        exit(::Maketable::EXIT_COD_OF_ERROR_OCURRENT)
       end
     end
 
     def make_next_month_item
-      dest = Item.new(@desc_str, @year_str)
+      dest = Item.new(@desc_str, @year_str, -1)
       dest.analyze
       next_month = @date_head.next_month
       dest.date_head = next_month

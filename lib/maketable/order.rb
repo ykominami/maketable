@@ -119,9 +119,9 @@ module Maketable
 
       def make_table_row_label(start_month)
         start_day = "#{start_month}/1"
-        @order_month[1][1][0].each_with_object([]) do |_x, list|
+        @order_month[1][1][0].each_with_object([]) do |x, list|
           list << if list.empty?
-                    item = Item.new(start_day, @year)
+                    item = Item.new(start_day, @year, x.object_id)
                     item.analyze
                     item
                   else
