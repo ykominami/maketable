@@ -151,14 +151,8 @@ GEM
     ykxutils (0.1.6)
 
 PLATFORMS
-<<<<<<< HEAD
   x86_64-linux
-||||||| 3a9e6a0
   x64-mingw32
-=======
-  x64-mingw32
-  x86_64-linux
->>>>>>> df4d5dd6ef918afb3beee526dbc3e3a3ac1a31ae
 
 DEPENDENCIES
   aruba
