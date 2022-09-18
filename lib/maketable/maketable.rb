@@ -30,14 +30,70 @@ module Maketable
     end
 
     def show_yaml
-      pp @yaml
+      puts @yaml
     end
 
     def analyze
       analyze_level1
       # item_sort
       analyze_level2
-      @hs
+      # @hs
+      # @hs_items
+      @hs_table
+    end
+
+    def analyze_level1
+      @yaml.each do |key, value|
+        unless value
+          @hs[key] = []
+          @hs_items[key] = []
+          next
+        end
+        value.each_with_index do |str, index|
+          item = Item.new(str, @year_str, index)
+          item.analyze
+          @hs_items[key] ||= []
+          @hs_items[key] << item
+        end
+        # puts "key=#{key}"
+        # puts "hs_itms=#{@hs_items}"
+        # puts "###########"
+        # puts "hs_itms[#{key}]=#{ @hs_items[key] }"
+        # puts "########### END"
+        @hs_items[key] = @hs_items[key].sort_by(&:date_head)
+      end
+    end
+
+    def analyze_level2
+      @hs_items.each do |column, value|
+        if value.empty?
+          @hs_table[column] = {}
+          @hs_table[column][@month_range_x_index] = {}
+        else
+          value.each do |item|
+            Order.order(@month_range, @day_range_array, column, item, @hs_table)
+          end
+        end
+      end
+      @hs_table
+    end
+
+    def analyze2
+      # puts "analyze2"
+      @yaml.each do |key, value|
+        unless value
+          @hs[key] = []
+          @hs_items[key] = []
+          next
+        end
+        v.each_with_index do |str, index|
+          item = Item.new(str, @year_str, index)
+          # item.analyze
+          @hs_items[key] ||= []
+          @hs_items[key] << item
+        end
+        # @hs_items[k] = @hs_items[k].sort_by(&:date_head)
+      end
     end
 
     def show_any(level, item)
@@ -62,14 +118,6 @@ module Maketable
       hash.each_key do |k|
         puts "#{indent_k}#{k}"
         show_any(level_v, hash[k])
-      end
-    end
-
-    def next_dir(dir)
-      if dir == :v
-        :h
-      else
-        :v
       end
     end
 
@@ -147,7 +195,6 @@ module Maketable
       dir = :v
       @v = v
       @hash = hash
-      # next_dir = next_dir(dir)
 
       @yaml.each_key do |key|
         puts "xhs_items|key=#{key}"
@@ -165,54 +212,6 @@ module Maketable
       # pp @hs
     end
 
-    def analyze2
-      # puts "analyze2"
-      @yaml.each do |k, v|
-        unless v
-          @hs[k] = []
-          @hs_items[k] = []
-          next
-        end
-        v.each_with_index do |str, index|
-          item = Item.new(str, @year_str, index, k)
-          # item.analyze
-          @hs_items[k] ||= []
-          @hs_items[k] << item
-        end
-        # @hs_items[k] = @hs_items[k].sort_by(&:date_head)
-      end
-    end
-
-    def analyze_level1
-      @yaml.each do |k, v|
-        unless v
-          @hs[k] = []
-          @hs_items[k] = []
-          next
-        end
-        v.each_with_index do |str, _index|
-          item = Item.new(str, @year_str)
-          item.analyze
-          @hs_items[k] ||= []
-          @hs_items[k] << item
-        end
-        @hs_items[k] = @hs_items[k].sort_by(&:date_head)
-      end
-    end
-
-    def analyze_level2
-      @hs_items.each do |column, v|
-        if v.empty?
-          @hs_table[column] = {}
-          @hs_table[column][@month_range_x_index] = {}
-        else
-          v.each do |item|
-            Order.order(@month_range, @day_range_array, column, item, @hs_table)
-          end
-        end
-      end
-      @hs_table
-    end
 
     def show(table_format = :trac_wiki)
       ot = OutputTable.new(@month_range, @hs_table, @month_range_x_index, @year, @day_range_group)
