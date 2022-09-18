@@ -11,4 +11,7 @@
 # rspec failure tracking
 .rspec_status
 *.code-workspace
-
+/vendor/
+/_temp/
+/.vscode/
+/.byebug_history

@@ -1,5 +1,32 @@
+require 'yaml'
+require 'pathname'
 module Maketable
   class LimitedMarkDown
+    class << self
+      def create_from_yaml_file(yaml_file)
+        yaml_file_pn = Pathname.new(yaml_file)
+        yaml_file_parent_pn = yaml_file_pn.parent
+        obj = YAML.load_file(yaml_file_pn)
+        input_file_pn = Pathname.new(obj["input_file"])
+        output_file_pn = Pathname.new(obj["output_file"])
+
+        obj["input_file"] = yaml_file_parent_pn + input_file_pn if !input_file_pn.exist?
+        obj["output_file"] = yaml_file_parent_pn + output_file_pn if !output_file_pn.exist?
+
+        colums_count = obj["columns_count"]
+        table_format = obj["table_format"]
+        headers = obj["headers"]
+        fields = obj["fields"]
+        table_format = obj["table_format"]
+        #format = :markdown
+        fields.map{ |hs|
+          hs["re"] = Regexp.new("^#{hs["name"]}:([^|]*)$")
+        }
+
+        lmd = self.new(obj["input_file"], obj["output_file"])
+        [lmd, obj]
+      end
+    end
     # 初期化
     def initialize(infile, outfile)
       @infile = infile
@@ -85,6 +112,7 @@ module Maketable
     def md2table(columns_count, header_labels, format, fields)
       #p fields
       lines = []
+      raise unless columns_count
       @columns_count = columns_count
       max_heading_size = 0
       arr = File.readlines(@infile)
@@ -117,7 +145,7 @@ module Maketable
             end
             x["value"]
           }
-          
+
           lx = [level - 1, desc, status, get_label.join("-")].concat(arrx)
           #puts "lx=#{lx}"
           lines << lx
