@@ -12,22 +12,27 @@ module Maketable
       @date_tail = nil
     end
 
-    def output(level)
+    def show(level)
       indent = " " * level
       puts "#{indent}desc_str=#{@desc_str}"
     end
 
     def analyze
       # byebug
+      # puts "@desc_str=#{@desc_str}|"
       left, _sep, _right = @desc_str.partition(" ")
       head, sep, tail = left.partition(",")
       if sep == ""
         head, sep, tail = left.partition("-")
         if sep == ""
           date_str = %(#{@year_str}/#{left})
-          p "date_str=#{date_str}"
-          datetime_head = DateTime.parse(date_str)
-          @date_head = datetime_head.to_date
+          begin
+            datetime_head = DateTime.parse(date_str)
+            @date_head = datetime_head.to_date
+          rescue StandardError => e
+            puts e.message
+            puts "date_str=#{date_str}"
+          end
         else
           datetime_head = DateTime.parse(%(#{@year_str}/#{head}))
           @date_head = datetime_head.to_date

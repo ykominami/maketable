@@ -14,36 +14,35 @@ end
 
 def check_hash_structure(obj, kind)
   valid = true
-  obj.each do |k,v|
-    #p v.class
-    #p "=="
-    if kind == 4
-      ret = check_hash_structure_sub_4(v, k)
-    else
-      ret = check_hash_structure_sub(v)
-    end
+  obj.each do |k, v|
+    # p v.class
+    # p "=="
+    ret = if kind == 4
+            check_hash_structure_sub_4(v, k)
+          else
+            check_hash_structure_sub(v)
+          end
     valid = ret if valid
   end
   valid
 end
 
 def check_hash_structure_sub(obj)
-  #p obj.keys
+  # p obj.keys
   valid = true
-  obj.each do |k,v|
-    if k != v.size
-      p "==#{k}"
-      p v.class
-      p v.size
-      p v
-      valid = false
-    end
+  obj.each do |k, v|
+    next unless k != v.size
+
+    p "==#{k}"
+    p v.class
+    p v.size
+    p v
+    valid = false
   end
   valid
 end
 
-def check_hash_structure_sub_4(obj, k)
-  #p obj.keys
+def check_hash_structure_sub_4(obj, key)
   valid = true
   size_list_hash = {
     1 => [12],
@@ -52,16 +51,15 @@ def check_hash_structure_sub_4(obj, k)
     4 => [3, 3, 3, 3]
   }
   obj.each_with_index do |v, ind|
-    #p "#######=== k=#{k} ind=#{ind}"
-    if size_list_hash[k][ind] != v.size
-      p "size_list_hash[#{k}][#{ind}]=#{size_list_hash[k][ind]}"
-      p "v.size=#{v.size}"
-      p "==#{ind}"
-      p v.class
-      p v.size
-      p v
-      valid = false
-    end
+    next unless size_list_hash[key][ind] != v.size
+
+    # p "size_list_hash[#{k}][#{ind}]=#{size_list_hash[k][ind]}"
+    # p "v.size=#{v.size}"
+    # p "==#{ind}"
+    # p v.class
+    # p v.size
+    # p v
+    valid = false
   end
   valid
 end
@@ -110,19 +108,14 @@ RSpec.describe "M" do
     year = 2022
     max = 12
     obj = Maketable::Order.make_month_order_a(year, max)
-    #p obj
+    # p obj
     ret = check_hash_structure(obj, 1)
     expect(ret).to eq(true)
   end
 
-  it "regexp" , ycmd: 100 do
+  it "regexp", ycmd: 100 do
     re_str = Regexp.escape("<<(.+)>>")
     re_label = Regexp.new(re_str)
-
-    #re_label = Regexp.new("[<(.+)>]")
-    #re_label = Regexp.new("<(.+)>")
-    #re_label = Regexp.new("(\[<)(.+)(>\])")
-    #re_label = Regexp.new("(.+)")
     str = "開発者会議2022 <<開会>>"
     result = re_label.match(str)
     if result
@@ -132,6 +125,5 @@ RSpec.describe "M" do
       p "[3] #{Regexp.last_match[3]}"
     end
     expect(result).to eq(nil)
-
   end
 end

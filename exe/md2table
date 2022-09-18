@@ -1,0 +1,9 @@
+require "bundler/setup"
+require "maketable"
+require 'yaml'
+
+lmd , hs = Maketable::LimitedMarkDown.create_md_from_setting_yaml_file(yaml_file)
+str = lmd.md2table(hs["columns_count"], hs["headers"], hs["table_format"], hs["fields"])
+puts str
+lmd.output(str)
+

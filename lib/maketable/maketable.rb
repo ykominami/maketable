@@ -1,10 +1,9 @@
-# frozen_string_literal: true
-
 require "yaml"
 require "date"
 require "pp"
 
 module Maketable
+  # テーブル作成クラス
   class Maketable
     def initialize(yamlfile, year)
       @yamlfile = yamlfile
@@ -30,7 +29,7 @@ module Maketable
       @month_range_x_index = 0
     end
 
-    def show
+    def show_yaml
       pp @yaml
     end
 
@@ -41,37 +40,32 @@ module Maketable
       @hs
     end
 
-    def output_any(level, item)
+    def show_any(level, item)
       indent = " " * level
       if item.instance_of?(String)
         puts "#{indent}#{item}"
       elsif item.instance_of?(Array)
         item.each do |x|
-          output_any(level + 1, x)
+          show_any(level + 1, x)
         end
       elsif item.instance_of?(Hash)
-        output_hash( level + 1, item)
+        show_hash(level + 1, item)
       else
-        item.output(level)
+        item.show(level)
       end
     end
 
-    def output_hash(level, hash)
+    def show_hash(level, hash)
       indent_k = " " * level
       level_v = level + 1
-      indent_v = " " * level_v
 
-      hash.keys.each do |k|
+      hash.each_key do |k|
         puts "#{indent_k}#{k}"
-        output_any(level_v, hash[k])
+        show_any(level_v, hash[k])
       end
     end
 
-    def xhs_items_0
-      output_hash(0, @hs_items)
-    end
- 
-    def next_dir( dir )
+    def next_dir(dir)
       if dir == :v
         :h
       else
@@ -95,16 +89,16 @@ module Maketable
           xhs_items_sub_h(@v, @h, output_hs, item)
           global_position_update(v, h, :h)
         end
-      elsif list == nil
+      elsif list.nil?
         puts "xhs_items_sub_v|Nil"
         output_hs[@v][@h] = nil
         global_position_update(@v, @h, :h)
       else
         puts "xhs_items_sub_v|Hash"
         # Hashとみなす
-        list.keys.each do |key|
+        list.each_key do |key|
           output_hs[@v][@h] = key
-          xhs_items_sub_h(@v, @h, output_hs, list[key] )
+          xhs_items_sub_h(@v, @h, output_hs, list[key])
           global_position_update(@v, @h, :h)
         end
       end
@@ -123,25 +117,25 @@ module Maketable
           xhs_items_sub_v(@v, @h, output_hs, item)
           global_position_update(v, h, :v)
         end
-      elsif list == nil
+      elsif list.nil?
         output_hs[@v][@h] = nil
         global_position_update(v, h, :v)
       else
         # Hashとみなす
-        list.keys.each do |key|
+        list.each_key do |key|
           output_hs[@v][@h] = nil
-          xhs_items_sub_h(@v, @h, output_hs, list[key] )
+          xhs_items_sub_h(@v, @h, output_hs, list[key])
           global_position_update(v, h, :v)
         end
       end
     end
 
-    def global_position_update(v, h, dir)
+    def global_position_update(v, hash, dir)
       if dir == :h
-        @h += 1
+        @hash += 1
         @v = v
       else
-        @h = h
+        @hash = hash
         @v += 1
       end
     end
@@ -152,40 +146,40 @@ module Maketable
       @hs = {}
       dir = :v
       @v = v
-      @h = h
-      next_dir = next_dir(dir)
+      @hash = hash
+      # next_dir = next_dir(dir)
 
-      @yaml.keys.each do |key|
+      @yaml.each_key do |key|
         puts "xhs_items|key=#{key}"
         @hs[@v] ||= {}
-        @hs[@v][@h] = key
-        puts "xhs_items|@hs[#{@v}][#{@h}]=#{ @hs[@v][@h] }"
+        @hs[@v][@hash] = key
+        puts "xhs_items|@hs[#{@v}][#{@hash}]=#{@hs[@v][@hash]}"
         if dir == :v
-          xhs_items_sub_v(@v, @h, @hs, @yaml[key] )
+          xhs_items_sub_v(@v, @hash, @hs, @yaml[key])
         else
-          xhs_items_sub_h(@v, @h, @hs, @yaml[key] )
+          xhs_items_sub_h(@v, @hash, @hs, @yaml[key])
         end
         global_position_update(v, h, dir)
       end
 
-      pp @hs
+      # pp @hs
     end
 
-    def analyze_2
-      puts "analyze_2"
+    def analyze2
+      # puts "analyze2"
       @yaml.each do |k, v|
         unless v
           @hs[k] = []
           @hs_items[k] = []
           next
         end
-        v.each do |str|
-          item = Item.new(str, @year_str)
-          #item.analyze
+        v.each_with_index do |str, index|
+          item = Item.new(str, @year_str, index, k)
+          # item.analyze
           @hs_items[k] ||= []
           @hs_items[k] << item
         end
-        #@hs_items[k] = @hs_items[k].sort_by(&:date_head)
+        # @hs_items[k] = @hs_items[k].sort_by(&:date_head)
       end
     end
 
@@ -196,7 +190,7 @@ module Maketable
           @hs_items[k] = []
           next
         end
-        v.each do |str|
+        v.each_with_index do |str, _index|
           item = Item.new(str, @year_str)
           item.analyze
           @hs_items[k] ||= []
@@ -220,10 +214,10 @@ module Maketable
       @hs_table
     end
 
-    def output(table_format = :trac_wiki)
+    def show(table_format = :trac_wiki)
       ot = OutputTable.new(@month_range, @hs_table, @month_range_x_index, @year, @day_range_group)
       max_row = ot.make_table
-      ot.output(max_row, table_format)
+      ot.show(max_row, table_format)
     end
   end
 end

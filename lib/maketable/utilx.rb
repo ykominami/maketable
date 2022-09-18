@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 module Maketable
+  # 拡張ユーティリティクラス
   class Utilx
     class << self
       def make_table_format(data:, format: :trac_wiki)

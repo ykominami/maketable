@@ -32,4 +32,25 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.metadata["rubygems_mfa_required"] = "true"
+
+  spec.add_runtime_dependency "rake", "~> 13.0"
+  spec.add_runtime_dependency "rspec", "~> 3.11.0"
+  spec.add_runtime_dependency "rubocop", "~> 1.36"
+  spec.add_runtime_dependency "rubocop-rake", "~> 0.6.0"
+  spec.add_runtime_dependency "rubocop-rspec", "~> 2.13.1"
+  spec.add_runtime_dependency "ykxutils", "~> 0.1.6"
+
+  spec.add_development_dependency "aruba"
+  spec.add_development_dependency "byebug"
+  spec.add_development_dependency "clitest"
+  spec.add_development_dependency "coderay", "~> 1.1.3"
+  spec.add_development_dependency "debug"
+  spec.add_development_dependency "guard-yard"
+  spec.add_development_dependency "pre-commit"
+  spec.add_development_dependency "rb-readline"
+  spec.add_development_dependency "redcarpet"
+  spec.add_development_dependency "rspec_junit_formatter"
+  spec.add_development_dependency "rufo"
+  spec.add_development_dependency "yard"
+  spec.add_development_dependency "yard-activesupport-concern"
 end

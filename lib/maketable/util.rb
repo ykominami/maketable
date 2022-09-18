@@ -3,6 +3,7 @@
 require "date"
 
 module Maketable
+  # ユーティリティクラス
   class Util
     class << self
       def make_date_list(year, month, max = 12)

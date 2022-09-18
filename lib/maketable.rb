@@ -9,12 +9,14 @@ require_relative "maketable/tablecolumn"
 require_relative "maketable/util"
 require_relative "maketable/limitedmarkdown"
 require_relative "maketable/utilx"
-#require_relative "maketable/itemx"
+require_relative "maketable/hiretext"
+require_relative "maketable/cli"
 
 require "pathname"
 require "byebug"
 module Maketable
-  TEST_DATA_DIR = Pathname.new(__dir__).parent + "test_data"
+  #  TEST_DATA_DIR = Pathname.new(__dir__).parent + "test_data"
+  TEST_DATA_DIR = Pathname.new(__dir__).parent.parent.join("maketable_test_data")
 
   class Error < StandardError; end
   class InvalidYearError < Error; end

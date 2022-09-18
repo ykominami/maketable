@@ -1,0 +1,21 @@
+require "bundler/setup"
+require "maketable"
+require "pathname"
+
+year = 2022
+#fname = "test_b.yml"
+#fname = "t.md"
+fname = "t.yml"
+#dir = "C:\Users\ykomi\cur\ruby\maketable_test_data"
+#dir_pn = Pathname.new(dir)
+
+#input_pn = Maketable::TEST_DATA_DIR + fname
+#input_pn = Maketable::TEST_DATA_DIR.join("../../maketable_test_data").join(fname)
+input_pn = Pathname.new("../../maketable_test_data").join(fname)
+#input_pn = dir_pn.join(fname)
+p input_pn
+p input_pn.exist?
+
+mt = Maketable::Maketable.new(input_pn, year)
+#mt.xhs_items
+mt.output

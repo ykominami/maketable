@@ -1,0 +1,36 @@
+require 'maketable'
+
+banner = "Useage: bundle exec ruby exe/hiretext [--lmd] yaml-file"
+exit_code = 0
+
+opt = nil
+yaml_file = nil
+
+if ARGV.size == 2
+  opt = ARGV.shift
+end
+if ARGV.size == 1
+  yaml_file = ARGV.shift
+end
+
+if opt == "--lmd"
+  opt = :lmd
+end
+
+if yaml_file.nil?
+  puts banner
+  exit_code = 10
+  exit(exit_code)
+end
+
+if opt == :lmd
+  lmd , hash = Maketable::HireText::Hire.create_md_from_setting_yaml_file(yaml_file, opt)
+  str = lmd.md2table(hash["columns_count"], hash["headers"], hash["table_format"], hash["fields"])
+  # puts str
+  lmd.output(str)
+else
+  hire , hash = Maketable::HireText::Hire.create_md_from_setting_yaml_file(yaml_file, opt)
+  hire.parse
+  str = hire.hire2md
+  hire.output(str)
+end

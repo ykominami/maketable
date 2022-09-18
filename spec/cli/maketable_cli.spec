@@ -1,6 +1,8 @@
-require 'spec_helper'
-require 'pry'
-require 'aruba/rspec'
+# frozen_string_literal: true
+
+require "spec_helper"
+require "pry"
+require "aruba/rspec"
 
 RSpec.describe "CLI", type: :aruba do
   before(:each) do
@@ -9,6 +11,6 @@ RSpec.describe "CLI", type: :aruba do
   end
   it "", zcmd: 1 do
     expect(last_command_started).to be_successfully_executed
-#    expect(last_command_started).to eq(nil)
+    #    expect(last_command_started).to eq(nil)
   end
 end
