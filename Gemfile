@@ -7,7 +7,6 @@ gemspec
 
 group :development do
   gem "aruba"
-  gem "byebug"
   gem "coderay", "~> 1.1.3"
   gem "pre-commit"
   gem "rb-readline"
@@ -20,8 +19,8 @@ group :development do
   gem "guard-yard"
   gem "yard-activesupport-concern"
   gem "redcarpet"
-  gem "debug", require: false
   gem "rufo"
+  gem "debug", ">= 1.0.0"
 end
 gem "clitest"
 gem "rspec_junit_formatter"

@@ -1,6 +1,9 @@
 require "bundler/setup"
 require "maketable"
 require 'yaml'
+require 'debug'
+
+binding.break
 
 # bundle exec ruby bin/a.rb C:\Users\ykomi\repo\github\ykominami\devconf_rel.wiki\task.md
 yamlfile = ARGV[0]

@@ -12,7 +12,7 @@ require_relative "maketable/utilx"
 #require_relative "maketable/itemx"
 
 require "pathname"
-require "byebug"
+require "debug"
 module Maketable
   TEST_DATA_DIR = Pathname.new(__dir__).parent + "test_data"
 
