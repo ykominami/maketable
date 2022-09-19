@@ -81,7 +81,7 @@ module Maketable
             output_column_index = tc_index + output_pad
             next_row = tc_start_row
             tc = @tc_ary[tc_index]
-            next_row = tc.output(@output_table[output_column_index], next_row, month_index, day_range_index)
+            next_row = tc.make_output(@output_table[output_column_index], next_row, month_index, day_range_index)
             max_row = next_row if max_row < next_row
           end
           tc_start_row = max_row
@@ -107,7 +107,7 @@ module Maketable
       lines
     end
 
-    def output(max_row, table_format)
+    def show(max_row, table_format)
       lineno = 0
       lines = []
       0.upto(max_row - 1) do |j|
