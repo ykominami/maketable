@@ -1,4 +1,7 @@
+# frozen_string_literal: true
+
 module Maketable
+  # テーブルクラス
   class Table
     def initialize(start_dir)
       @axi = {}

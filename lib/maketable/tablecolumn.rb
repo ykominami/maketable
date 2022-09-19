@@ -29,7 +29,7 @@ module Maketable
       output_row
     end
 
-    def output(output_hs, start_row, month_index, day_range_index)
+    def make_output(output_hs, start_row, month_index, day_range_index)
       output_row = start_row
       if @data_hs
         m_info = @data_hs[month_index]
