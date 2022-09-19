@@ -18,50 +18,19 @@ module Maketable
       puts "#{indent}desc_str=#{@desc_str}"
     end
 
-    def analyze
-      error_occrence_count = 0
-      # byebug
-      # puts "@desc_str=#{@desc_str}|"
-      left, _sep, _right = @desc_str.partition(" ")
-      head, sep, tail = left.partition(",")
+    def analzye_no_comma_pattern(left, desc_str)
+      head, sep, tail = left.partition("-")
       if sep == ""
-        head, sep, tail = left.partition("-")
-        if sep == ""
-          date_str = %(#{@year_str}/#{left})
-          begin
-            datetime_head = DateTime.parse(date_str)
-            @date_head = datetime_head.to_date
-            raise InvalidDataString if @date_head.nil?
-          rescue StandardError => exc
-            puts exc.message
-            puts "A0 desc_str=#{desc_str}"
-            error_occrence_count += 1
-          end
-        else
-          begin
-            date_str = %(#{@year_str}/#{head})
-            datetime_head = DateTime.parse(date_str)
-            @date_head = datetime_head.to_date
-            raise InvalidDataString if @date_head.nil?
-          rescue StandardError => exc
-            puts exc.message
-            puts "A1 desc_str=#{desc_str}"
-            puts "A1 date_str=#{date_str}"
-            error_occrence_count += 1
-          end
-
-          begin
-            lh, _sep, _rh = head.partition("/")
-            date_str = %(#{@year_str}/#{lh}/#{tail})
-            datetime_tail = DateTime.parse(date_str)
-            @date_tail = datetime_tail.to_date
-            raise InvalidDataString if @date_tail.nil?
-          rescue StandardError => exc
-            puts exc.message
-            puts "A2 desc_str=#{desc_str}"
-            puts "A2 date_str=#{date_str}"
-            error_occrence_count += 1
-          end
+        date_str = %(#{@year_str}/#{left})
+        begin
+          datetime_head = DateTime.parse(date_str)
+          @date_head = datetime_head.to_date
+          raise InvalidDataString if @date_head.nil?
+        rescue StandardError => e
+          puts e.message
+          puts "A0 desc_str=#{desc_str}"
+          puts "A1 date_str=#{date_str}"
+          Errorx.error_occr
         end
       else
         begin
@@ -69,29 +38,62 @@ module Maketable
           datetime_head = DateTime.parse(date_str)
           @date_head = datetime_head.to_date
           raise InvalidDataString if @date_head.nil?
-        rescue StandardError => exc
-          puts exc.message
-          puts "A3 desc_str=#{desc_str}"
-          puts "A3 date_str=#{date_str}"
-          error_occrence_count += 1
+        rescue StandardError => e
+          puts e.message
+          puts "A1 desc_str=#{desc_str}"
+          puts "A1 date_str=#{date_str}"
+          Errorx.error_occure
         end
-        lh, _sep, _rh = head.partition("/")
+
         begin
+          lh, _sep, _rh = head.partition("/")
           date_str = %(#{@year_str}/#{lh}/#{tail})
           datetime_tail = DateTime.parse(date_str)
           @date_tail = datetime_tail.to_date
-          raise InvalidDataString if @date_head.nil?
-        rescue StandardError => exc
-          puts exc.message
-          puts "A4 desc_str=#{desc_str}"
-          puts "A4 date_str=#{date_str}"
-          error_occrence_count += 1
+          raise InvalidDataString if @date_tail.nil?
+        rescue StandardError => e
+          puts e.message
+          puts "A2 desc_str=#{desc_str}"
+          puts "A2 date_str=#{date_str}"
+          Errorx.error_occure
         end
       end
+    end
 
-      if error_occrence_count > 0
-        exit(::Maketable::EXIT_COD_OF_ERROR_OCURRENT)
+    def analzye_comma_pattern(head, tail)
+      begin
+        datetime_head = DateTime.parse(%(#{@year_str}/#{head}))
+        @date_head = datetime_head.to_date
+      rescue StandardError => e
+        puts e.message
+        puts "A3 desc_str=#{desc_str}"
+        puts "A3 date_str=#{date_str}"
+        Errorx.error_occure
       end
+
+      lh, _sep, _rh = head.partition("/")
+      begin
+        datetime_tail = DateTime.parse(%(#{@year_str}/#{lh}/#{tail}))
+        @date_tail = datetime_tail.to_date
+      rescue StandardError => e
+        puts e.message
+        puts "A4 desc_str=#{desc_str}"
+        puts "A4 date_str=#{date_str}"
+        Maketable::Errorx.error_occure
+      end
+    end
+
+    def analyze
+      # byebug
+      # puts "@desc_str=#{@desc_str}|"
+      left, _sep, _right = @desc_str.partition(" ")
+      head, sep, tail = left.partition(",")
+      if sep == ""
+        analzye_no_comma_pattern(left, @desc_str)
+      else
+        analzye_comma_pattern(head, tail)
+      end
+      Errorx.check_error_and_exit
     end
 
     def make_next_month_item

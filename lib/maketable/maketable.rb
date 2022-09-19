@@ -212,7 +212,6 @@ module Maketable
       # pp @hs
     end
 
-
     def show(table_format = :trac_wiki)
       ot = OutputTable.new(@month_range, @hs_table, @month_range_x_index, @year, @day_range_group)
       max_row = ot.make_table

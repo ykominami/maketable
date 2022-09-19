@@ -240,9 +240,9 @@ module Maketable
       def peek_next_state(event)
         begin
           c_state = @state_hash[@cur_state][event]
-        rescue StandardError => exc
-          puts exc.message
-          puts exc.backtrace
+        rescue StandardError => e
+          puts e.message
+          puts e.backtrace
           puts "@cur_state=#{@cur_state}"
           exit(::Maketable::EXIT_COD_OF_ILLEGAL_STATE)
         end

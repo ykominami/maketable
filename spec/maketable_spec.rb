@@ -23,14 +23,14 @@ RSpec.describe Maketable do
     # expect(inst.analyze.size > 0).to be(true)
     # expect(inst.analyze.instance_of?(Hash)).to be(true)
     # expect(inst.analyze.keys).to be(nil)
-    expect(inst.analyze.keys.size > 0).to be(true)
+    expect(!inst.analyze.keys.empty?).to be(true)
   end
 
   it "table show", xcmd: 21 do
     inst = maketable
     inst.analyze
 
-    #inst.show_yaml
+    # inst.show_yaml
     expect do
       inst.show_yaml
       # puts("")
