@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Maketable
   class Itemx
     attr_reader :parent
@@ -32,8 +34,9 @@ module Maketable
     def self.add(level, name)
       puts "Itemx.add level=#{level} name=#{name}"
       if @cur_level < level
-        #p "@cur_level=#{@cur_level} level=#{level}"
+        # p "@cur_level=#{@cur_level} level=#{level}"
         raise InvalidLevelChangeError if @cur_level != (level - 1)
+
         @max_level = level
       elsif @cur_level > level
         reset_under_level(level)
@@ -54,7 +57,7 @@ module Maketable
           if parent
             parent.add_child(itemx)
           else
-            puts %!parent_level=#{parent_level}!
+            puts %(parent_level=#{parent_level})
             pp @itemx_by_level
             raise NoParentItemxError
           end
@@ -86,8 +89,8 @@ module Maketable
 
     def show_tree(level)
       indent = "  " * level
-      puts %!#{indent}#{@name}!
-      @children.map{ |x| x.show_tree(level + 1) }
+      puts %(#{indent}#{@name})
+      @children.map { |x| x.show_tree(level + 1) }
     end
   end
 end

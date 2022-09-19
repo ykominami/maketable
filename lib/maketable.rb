@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "pathname"
-#require "byebug"
+# require "byebug"
 
 module Maketable
   TEST_DATA_DIR = Pathname.new(__dir__).parent.join("test_data")
