@@ -13,10 +13,6 @@ module Maketable
       @itemx_by_level[@cur_level] = @root
     end
 
-    def self.get_root
-      @root
-    end
-
     def self.show
       pp @root
     end

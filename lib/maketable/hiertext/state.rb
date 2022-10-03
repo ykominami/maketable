@@ -7,7 +7,7 @@ module Maketable
     class State
       attr_reader :cur_state
 
-      def get_state_hash
+      def state_hash
         {
           START: {
             BLACK_SQUARE: :FIRST_LEVEL,
@@ -117,7 +117,7 @@ module Maketable
         }
       end
 
-      def get_action_hash
+      def action_hash
         {
           START: {
             BLACK_SQUARE: :AC_MAKE_FIRST_LEVEL,
@@ -229,11 +229,11 @@ module Maketable
 
       def initialize
         @cur_state = :START
-        @state_hash = get_state_hash
-        @action_hash = get_action_hash
+        @state_hash = state_hash
+        @action_hash = action_hash
       end
 
-      def set_next_state(next_state)
+      def add_next_state(next_state)
         @cur_state = next_state
       end
 

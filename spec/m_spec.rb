@@ -1,24 +1,12 @@
 # frozen_string_literal: true
 
-def capture(stream)
-  begin
-    stream = stream.to_s
-    eval "$#{stream} = StringIO.new"
-    yield
-    result = eval("$#{stream}").string
-  ensure
-    eval "$#{stream} = #{stream.upcase}"
-  end
-  result
-end
-
 def check_hash_structure(obj, kind)
   valid = true
   obj.each do |k, v|
     # p v.class
     # p "=="
     ret = if kind == 4
-            check_hash_structure_sub_4(v, k)
+            check_hash_structure_sub_four(v, k)
           else
             check_hash_structure_sub(v)
           end
@@ -42,7 +30,7 @@ def check_hash_structure_sub(obj)
   valid
 end
 
-def check_hash_structure_sub_4(obj, key)
+def check_hash_structure_sub_four(obj, key)
   valid = true
   size_list_hash = {
     1 => [12],
@@ -91,7 +79,7 @@ RSpec.describe "M" do
   it "make month order 1", ycmd: 10 do
     year = 2022
     max = 12
-    obj = Maketable::Order.make_month_order_1(year, max)
+    obj = Maketable::Order.make_month_order_one(year, max)
     ret = check_hash_structure(obj, 4)
     expect(ret).to eq(true)
   end
@@ -99,7 +87,7 @@ RSpec.describe "M" do
   it "make month order 4", ycmd: 11 do
     year = 2022
     max = 12
-    obj = Maketable::Order.make_month_order_4(year, max)
+    obj = Maketable::Order.make_month_order_four(year, max)
     ret = check_hash_structure(obj, 4)
     expect(ret).to eq(true)
   end

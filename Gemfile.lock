@@ -2,6 +2,14 @@ PATH
   remote: .
   specs:
     maketable (0.1.0)
+      bundler
+      coderay (~> 1.1.3)
+      debug (>= 1.0.0)
+      rake (~> 13.0)
+      rufo
+      simpleoptparse
+      ykutils
+      ykxutils
 
 GEM
   remote: https://rubygems.org/
@@ -48,8 +56,11 @@ GEM
       reline (>= 0.3.1)
     diff-lcs (1.5.0)
     erubi (1.11.0)
+    erubis (2.7.0)
     ffi (1.15.5)
-    ffi (1.15.5-x64-mingw32)
+    filex (0.1.7)
+      erubis
+      messagex
     formatador (1.1.0)
     guard (2.18.0)
       formatador (>= 0.2.4)
@@ -71,6 +82,7 @@ GEM
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
     lumberjack (1.2.8)
+    messagex (0.1.5)
     method_source (1.0.0)
     mime-types (3.4.1)
       mime-types-data (~> 3.2015)
@@ -91,12 +103,12 @@ GEM
       method_source (~> 1.0)
     rainbow (3.1.1)
     rake (13.0.6)
-    rb-fsevent (0.11.1)
+    rb-fsevent (0.11.2)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     rb-readline (0.5.5)
     redcarpet (3.5.1)
-    regexp_parser (2.5.0)
+    regexp_parser (2.6.0)
     reline (0.3.1)
       io-console (~> 0.5)
     rexml (3.2.5)
@@ -106,16 +118,16 @@ GEM
       rspec-mocks (~> 3.11.0)
     rspec-core (3.11.0)
       rspec-support (~> 3.11.0)
-    rspec-expectations (3.11.0)
+    rspec-expectations (3.11.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.11.0)
     rspec-mocks (3.11.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.11.0)
-    rspec-support (3.11.0)
-    rspec_junit_formatter (0.5.1)
+    rspec-support (3.11.1)
+    rspec_junit_formatter (0.6.0)
       rspec-core (>= 2, < 4, != 2.12.0)
-    rubocop (1.35.0)
+    rubocop (1.36.0)
       json (~> 2.3)
       parallel (~> 1.10)
       parser (>= 3.1.2.1)
@@ -129,32 +141,37 @@ GEM
       parser (>= 3.1.1.0)
     rubocop-rake (0.6.0)
       rubocop (~> 1.0)
-    rubocop-rspec (2.12.1)
-      rubocop (~> 1.31)
+    rubocop-rspec (2.13.2)
+      rubocop (~> 1.33)
     ruby-progressbar (1.11.0)
     rufo (0.13.0)
     shellany (0.0.1)
+    simpleoptparse (0.1.2)
     sys-uname (1.2.2)
       ffi (~> 1.1)
     thor (1.2.1)
     tilt (2.0.11)
-    unicode-display_width (2.2.0)
+    unicode-display_width (2.3.0)
     webrick (1.7.0)
     yard (0.9.28)
       webrick (~> 1.7.0)
     yard-activesupport-concern (0.0.1)
       yard (>= 0.8)
+    ykutils (0.1.7)
+      erubi
+      filex
+      tilt
+    ykxutils (0.1.7)
 
 PLATFORMS
-  x64-mingw32
   x86_64-linux
 
 DEPENDENCIES
   aruba
+  bundler
   clitest
   coderay (~> 1.1.3)
   debug (>= 1.0.0)
-  erubi
   guard-yard
   maketable!
   pre-commit
@@ -167,9 +184,11 @@ DEPENDENCIES
   rubocop-rake
   rubocop-rspec
   rufo
-  tilt
+  simpleoptparse
   yard
   yard-activesupport-concern
+  ykutils
+  ykxutils
 
 BUNDLED WITH
-   2.3.9
+   2.3.22

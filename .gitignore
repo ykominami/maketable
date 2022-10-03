@@ -15,3 +15,5 @@
 /_temp/
 /.vscode/
 /.byebug_history
+.ruby-version
+
