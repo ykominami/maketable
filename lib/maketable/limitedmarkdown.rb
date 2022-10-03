@@ -32,20 +32,20 @@ module Maketable
       @labels = []
     end
 
-    def get_table_width
+    def table_width
       @items_count + @columns_count
     end
 
     def create_table_header(labels)
       line_no = 0
-      @table[line_no] ||= Array.new(get_table_width)
+      @table[line_no] ||= Array.new(table_width)
       labels.each_with_index do |label, index|
         @table[line_no][@items_count + index] = label
       end
       line_no += 1
       case @table_format
       when :markdown
-        @table[line_no] ||= Array.new(get_table_width, "-")
+        @table[line_no] ||= Array.new(table_width, "-")
         line_no += 1
       end
       line_no
@@ -54,7 +54,7 @@ module Maketable
     def create_table_body(lines, next_lineno)
       lines.each_with_index do |x, index|
         ind = next_lineno + index
-        @table[ind] ||= Array.new(get_table_width)
+        @table[ind] ||= Array.new(table_width)
         @table[ind][x[0]] = x[1]
         x[2, (x.size - 1)].each_with_index do |val, index_inner|
           @table[ind][@items_count + index_inner] = val
@@ -63,7 +63,7 @@ module Maketable
     end
 
     def make_table
-      width = get_table_width
+      width = table_width
       0.upto(@table.keys.size) do |lineno|
         arr = []
         0.upto(width) do |index|
@@ -85,7 +85,7 @@ module Maketable
       @cur_level = level
     end
 
-    def get_label
+    def label
       if @cur_level >= 1
         @labels[1, @cur_level]
       else
@@ -130,8 +130,7 @@ module Maketable
           next unless x
 
           if x["name"] == "ラベル"
-            x["value"] = get_label.join("-")
-            # puts "#### #{get_label}"
+            x["value"] = label.join("-")
           elsif field =~ x["re"]
             x["value"] = Regexp.last_match(1)
           end

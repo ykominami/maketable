@@ -16,13 +16,13 @@ module Maketable
         4 => [[4, 5, 6], [7,   8, 9], [10, 11,   12], [1, 2, 3]]
       }
     }
-    @order_month_1 = {
+    @order_month_one = {
       1 => [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]],
       2 => [[1, 2, 3, 4, 5, 6], [7, 8, 9, 10, 11, 12]],
       3 => [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]],
       4 => [[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12]]
     }
-    @order_month_4 = {
+    @order_month_four = {
       1 => [[4, 5, 6,   7,   8, 9,   10, 11,   12,   1, 2, 3]],
       2 => [[4, 5, 6,   7,   8, 9], [10, 11,   12,   1, 2, 3]],
       3 => [[4, 5, 6,   7], [8, 9,   10, 11], [12,   1, 2, 3]],
@@ -49,31 +49,25 @@ module Maketable
 
     class << self
       def make_month_order(year, start_month, max)
-        # datetime_hash = Util.make_datetime_hash(year, start_month, max)
         date_hash = Util.make_date_hash(year, start_month, max)
-        # Util.make_month_order(@order_month, datetime_hash)
         Util.make_month_order(@order_month, date_hash)
       end
 
-      def make_month_order_1(year, max)
+      def make_month_order_one(year, max)
         start_month = 1
-        # datetime_hash = Util.make_datetime_hash(year, start_month, max)
         date_hash = Util.make_date_hash(year, start_month, max)
-        # Util.make_month_order(@order_month_1, datetime_hash)
-        Util.make_month_order(@order_month_1, date_hash)
+        Util.make_month_order(@order_month_one, date_hash)
       end
 
-      def make_month_order_4(year, max)
+      def make_month_order_four(year, max)
         start_month = 4
-        # datetime_hash = Util.make_datetime_hash(year, start_month, max)
         date_hash = Util.make_date_hash(year, start_month, max)
-        # Util.make_month_order(@order_month_4, datetime_hash)
-        Util.make_month_order(@order_month_4, date_hash)
+        Util.make_month_order(@order_month_four, date_hash)
       end
 
       def make_month_order_a(year, max)
-        @order_month_a[1] = make_month_order_1(year, max)
-        @order_month_a[4] = make_month_order_4(year, max)
+        @order_month_a[1] = make_month_order_one(year, max)
+        @order_month_a[4] = make_month_order_four(year, max)
         @order_month_a
       end
 

@@ -210,7 +210,7 @@ module Maketable
           next if event == :X
 
           next_state = @state.peek_next_state(event)
-          @state.set_next_state(next_state)
+          @state.add_next_state(next_state)
         end
         # pp @root
       end

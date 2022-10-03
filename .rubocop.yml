@@ -5,18 +5,29 @@ AllCops:
   NewCops: enable
   SuggestExtensions: false
 
+Style/Documentation:
+  Enabled: false
+Style/ClassAndModuleChildren:
+  Enabled: false
 Style/StringLiterals:
   Enabled: true
   EnforcedStyle: double_quotes
-
 Style/StringLiteralsInInterpolation:
   Enabled: true
   EnforcedStyle: double_quotes
+Style/GuardClause:
+  Enabled: false
+Style/IfUnlessModifier:
+  Enabled: false
 
 Layout/LineLength:
   Max: 120
-
 # added by ykominami (default: 100)
-ClassLength:
-  CountComments: false # count full line comments?
-  Max: 300
+#ClassLength:
+#  CountComments: false # count full line comments?
+#  #  Max: 300
+#  Max: 600
+
+#Metrics/LineLength:
+#  #  Max: 120
+#  Max: 320

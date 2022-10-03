@@ -31,5 +31,29 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
+  spec.add_runtime_dependency 'bundler'
+  spec.add_runtime_dependency "coderay", "~> 1.1.3"
+  spec.add_runtime_dependency "debug", ">= 1.0.0"
+  spec.add_runtime_dependency "rake", "~> 13.0"
+  spec.add_runtime_dependency "rufo"
+  spec.add_runtime_dependency 'simpleoptparse'
+  spec.add_runtime_dependency 'ykutils'
+  spec.add_runtime_dependency 'ykxutils'
+
+  spec.add_development_dependency "aruba"
+  spec.add_development_dependency "clitest"
+  spec.add_development_dependency "pre-commit"
+  spec.add_development_dependency "rb-readline"
+  spec.add_development_dependency "redcarpet"
+  spec.add_development_dependency "rspec", "~> 3.0"
+  spec.add_development_dependency "rspec_junit_formatter"
+  spec.add_development_dependency "rubocop", "~> 1.21"
+  spec.add_development_dependency "rubocop-rake"
+  spec.add_development_dependency "rubocop-rspec"
+
+  spec.add_development_dependency 'guard-yard'
+  spec.add_development_dependency 'yard'
+  spec.add_development_dependency 'yard-activesupport-concern'
+
   spec.metadata["rubygems_mfa_required"] = "true"
 end
