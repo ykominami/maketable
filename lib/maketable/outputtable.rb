@@ -19,6 +19,7 @@ module Maketable
       @output_table = Array.new(@width) { [] }
 
       @hs_table.keys.each_with_index do |column, index|
+        # p "OutputTable initialize column=#{column} index=#{index}"
         @tc_ary << TableColumn.new(index, column, @hs_table[column][@month_range_x_index], @month_range)
       end
     end
@@ -70,17 +71,23 @@ module Maketable
     end
 
     def make_output_table(output_pad, start_row)
+      # p "OutputTable make_output_table output_pad=#{output_pad} start_row=#{start_row}"
       max_row = 0
       tc_start_row = start_row
 
       @month_first.upto(@month_first + @months_of_year - 1) do |m_index|
+        # p "OutputTable make_output_table m_index=#{m_index}"
         month_index = @month_index_conv[m_index]
         @day_range_first.upto(@day_range_last) do |day_range_index|
+          # p "OutputTable make_output_table day_range_index=#{day_range_index}"
           make_table_row_label(tc_start_row, m_index, day_range_index)
+          # p "OutputTable make_output_table @tc_first=#{@tc_first} @tc_last=#{@tc_last}"
           @tc_first.upto(@tc_last) do |tc_index|
+            # p "OutputTable make_output_table tc_index=#{tc_index}"
             output_column_index = tc_index + output_pad
             next_row = tc_start_row
             tc = @tc_ary[tc_index]
+            # p @tc_ary
             next_row = tc.make_output(@output_table[output_column_index], next_row, month_index, day_range_index)
             max_row = next_row if max_row < next_row
           end

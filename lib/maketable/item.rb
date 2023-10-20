@@ -30,7 +30,7 @@ module Maketable
           puts e.message
           puts "A0 desc_str=#{desc_str}"
           puts "A1 date_str=#{date_str}"
-          Errorx.error_occr
+          Errorx.error_occur
         end
       else
         begin
@@ -42,7 +42,7 @@ module Maketable
           puts e.message
           puts "A1 desc_str=#{desc_str}"
           puts "A1 date_str=#{date_str}"
-          Errorx.error_occure
+          Errorx.error_occur
         end
 
         begin
@@ -55,7 +55,7 @@ module Maketable
           puts e.message
           puts "A2 desc_str=#{desc_str}"
           puts "A2 date_str=#{date_str}"
-          Errorx.error_occure
+          Errorx.error_occur
         end
       end
     end
@@ -68,7 +68,7 @@ module Maketable
         puts e.message
         puts "A3 desc_str=#{desc_str}"
         puts "A3 date_str=#{date_str}"
-        Errorx.error_occure
+        Errorx.error_occur
       end
 
       lh, _sep, _rh = head.partition("/")
@@ -79,7 +79,7 @@ module Maketable
         puts e.message
         puts "A4 desc_str=#{desc_str}"
         puts "A4 date_str=#{date_str}"
-        Maketable::Errorx.error_occure
+        Maketable::Errorx.error_occur
       end
     end
 

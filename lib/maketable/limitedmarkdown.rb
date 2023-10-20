@@ -104,7 +104,8 @@ module Maketable
 
       @columns_count = columns_count
       max_heading_size = 0
-      arr = File.readlines(@infile)
+      arr = File.readlines(@infile).map{ |line| line.chomp }
+      # arrx = arr.map{ |line| line.chomp }
       arr.each_with_index do |l, _index|
         next unless l
 
@@ -145,10 +146,12 @@ module Maketable
       create_table_body(lines, next_lineno)
       table = []
       0.upto(@table.keys.size - 1) do |lineno|
-        l = Utilx.make_table_format(data: @table[lineno], format: format).join("\n")
+        # l = Utilx.make_table_format(data: @table[lineno], format: format).join("\n")
+        l = Utilx.make_table_format(data: @table[lineno], format: format).join("")
         table << l
       end
       table.join("\n")
+      # table
     end
   end
 end

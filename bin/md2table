@@ -3,7 +3,7 @@ require "maketable"
 require 'yaml'
 require 'debug'
 
-binding.break
+# binding.break
 
 
 # bundle exec ruby bin/a.rb C:\Users\ykomi\repo\github\ykominami\devconf_rel.wiki\task.md
@@ -23,25 +23,20 @@ fields.map{ |hs|
 }
 lmd = Maketable::LimitedMarkDown.new(input_file, output_file)
 =end
-def test_file_base_pn
-  if ENV["TEST_DATA_DIR"]
-    Pathname.new(ENV["TEST_DATA_DIR"])
-  else
-    Maketable::TEST_DATA_DIR
-  end
+
+path = ARGV[0]
+default_path = Maketable::Utilx.test_file_x_pn("taskc_markdown.yaml")
+
+src_pn = Maketable::Utilx.get_file_path( path , default_path )
+if src_pn == nil
+  exit 0
 end
 
-def test_file_pn
-  @test_file_pn = test_file_base_pn + "test.yml"
-end
-
-def test_file_x_pn(fname)
-  @test_file_pn = test_file_base_pn + fname
-end
-
-yaml_file = test_file_x_pn("task_no_test_data.yaml")
-#p yaml_file
-lmd , hs = Maketable::LimitedMarkDown.create_from_yaml_file(yaml_file)
+#
+# lmd , hs = Maketable::LimitedMarkDown.create_md_from_setting_yaml_file(yaml_file)
+lmd , hs = Maketable::LimitedMarkDown.create_md_from_setting_yaml_file(src_pn)
 str = lmd.md2table(hs["columns_count"], hs["headers"], hs["table_format"], hs["fields"])
-lmd.output(str)
+#lmd.output(str)
+puts str
+lmd.output_file(str)
 

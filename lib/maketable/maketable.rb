@@ -199,10 +199,10 @@ module Maketable
       @hash = hash
 
       @yaml.each_key do |key|
-        puts "xhs_items|key=#{key}"
+        # puts "xhs_items|key=#{key}"
         @hs[@v] ||= {}
         @hs[@v][@hash] = key
-        puts "xhs_items|@hs[#{@v}][#{@hash}]=#{@hs[@v][@hash]}"
+        # puts "xhs_items|@hs[#{@v}][#{@hash}]=#{@hs[@v][@hash]}"
         if dir == :v
           xhs_items_sub_v(@v, @hash, @hs, @yaml[key])
         else
@@ -215,8 +215,10 @@ module Maketable
     end
 
     def show(table_format = :trac_wiki)
+      # p "Maketable show @hs_table=#{@hs_table}"
       ot = OutputTable.new(@month_range, @hs_table, @month_range_x_index, @year, @day_range_group)
       max_row = ot.make_table
+      # p "max_row=#{max_row}"
       ot.show(max_row, table_format)
     end
   end

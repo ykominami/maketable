@@ -2,10 +2,24 @@ require "bundler/setup"
 require "maketable"
 
 year = 2022
+
+path = ARGV[0]
+default_path = Maketable::Utilx.test_file_x_pn("test.yml")
+
+src_pn = Maketable::Utilx.get_file_path( path , default_path )
+if src_pn == nil
+  exit 0
+end
+
 #fname = "test_b.yml"
 #fname = "t.md"
-fname = "t.yml"
-input_pn = Maketable::TEST_DATA_DIR + fname
-mt = Maketable::Maketable.new(input_pn, year)
-mt.xhs_items
+#fname = "t.yml"
+#fname = "test.yml"
+#input_pn = Maketable::TEST_DATA_DIR + fname
+# p src_pn
+mt = Maketable::Maketable.new(src_pn, year)
+mt.analyze
+# exit
+# mt.xhs_items
 #mt.output
+mt.show
