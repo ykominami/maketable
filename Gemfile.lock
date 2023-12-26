@@ -161,7 +161,11 @@ GEM
       erubi
       filex
       tilt
-    ykxutils (0.1.7)
+    ykxutils (0.1.8)
+      bundler
+      erubi
+      rake (~> 13.0)
+      tilt
 
 PLATFORMS
   x86_64-linux
