@@ -144,7 +144,7 @@ GEM
     rubocop-rspec (2.17.1)
       rubocop (~> 1.33)
     ruby-progressbar (1.13.0)
-    rufo (0.13.0)
+    rufo (0.16.3)
     shellany (0.0.1)
     simpleoptparse (0.1.2)
     sys-uname (1.2.3)
