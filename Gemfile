@@ -20,7 +20,7 @@ group :test, optional: true do
   gem "pre-commit"
   gem "rb-readline"
   gem "redcarpet"
-  gem "rspec", "~> 3.0"
+  gem "rspec", "~> 3.12"
   gem "rspec_junit_formatter"
   gem "rubocop", "~> 1.59"
   gem "rubocop-rake"
