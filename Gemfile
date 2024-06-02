@@ -5,14 +5,14 @@ source "https://rubygems.org"
 # Specify your gem's dependencies in maketable.gemspec
 gemspec
 
-gem 'bundler'
+gem "bundler"
 gem "coderay", "~> 1.1.3"
 gem "debug", ">= 1.0.0"
 gem "rake", "~> 13.1"
 gem "rufo"
-gem 'simpleoptparse'
-gem 'ykutils'
-gem 'ykxutils'
+gem "simpleoptparse"
+gem "ykutils"
+gem "ykxutils"
 
 group :test, optional: true do
   gem "aruba"
